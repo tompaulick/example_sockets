@@ -35,6 +35,8 @@ anything else gets served by apache.
 </VirtualHost>
 ```
 
+You will also need to modify "multi-events.html" to point to your websever.  Change the one line.  And then move it to your web hosting directory.
+
 ## How to modify to add events
 ### Modify Main
 fn handle_event
