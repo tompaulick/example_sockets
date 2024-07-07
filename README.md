@@ -4,6 +4,7 @@ Modifiction of https://github.com/serg06/rust-full-websocket-example.git serg06'
 added:
 - example of calling a function, simulate work and periodic communication back to client via socket connection
 - documentation.  How does this code work?  How do you extend it?
+- added another example html file to exercise the added functionality
 
 
 ## How to modify to add events
