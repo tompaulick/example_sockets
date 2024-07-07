@@ -6,6 +6,34 @@ added:
 - documentation.  How does this code work?  How do you extend it?
 - added another example html file to exercise the added functionality
 
+## to run with your apache webserver 
+Define ProxyPass and ProxyPassReverse to allow for proxy access
+this will forward connections you define to your running rust code but also let you side-by-side serve pages as normal
+in the following example I am proxying 127.0.0.1:3000 via "http://mysite.com/ws" which connects to this websocket server code 
+anything else gets served by apache.
+
+```
+<VirtualHost *:80>
+    ServerName mysite.com
+
+    # Proxy settings for WebSocket
+    ProxyPass /ws ws://127.0.0.1:3000
+    ProxyPassReverse /ws ws://127.0.0.1:3000
+
+    ServerAdmin webmaster@localhost
+    DocumentRoot /home/tommypaulick/www/html/
+
+    <Directory /home/tommypaulick/www/html/>
+        Options Indexes FollowSymLinks
+        AllowOverride None
+        Require all granted
+    </Directory>
+
+    ErrorLog ${APACHE_LOG_DIR}/recipe-error.log
+    CustomLog ${APACHE_LOG_DIR}/recipe-access.log combined
+    LogLevel proxy:debug
+</VirtualHost>
+```
 
 ## How to modify to add events
 ### Modify Main
