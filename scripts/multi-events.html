@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WebSocket Test</title>
+</head>
+<body>
+    <h1>WebSocket Test</h1>
+    <input type="text" id="messageInput" placeholder="Enter your message">
+    <button id="sendButton">Send Message</button>
+    <button id="processButton">Run Process</button>
+    <div id="receivedMessages"></div>
+
+    <script type="text/javascript">
+        const ws = new WebSocket('ws://recipe.tomtec.io/ws');
+        
+        const sendButton = document.getElementById('sendButton');
+        const processButton = document.getElementById('processButton');
+        const messageInput = document.getElementById('messageInput');
+        const receivedMessages = document.getElementById('receivedMessages');
+
+        ws.onopen = event => {
+            console.log('WebSocket connection opened');
+        };
+        
+        ws.onmessage = event => {
+            const msg = JSON.parse(event.data);
+            console.log('received msg', msg);
+            const messageElement = document.createElement('div');
+            messageElement.textContent = 'Received: ' + JSON.stringify(msg);
+            receivedMessages.appendChild(messageElement);
+        };
+
+        ws.onerror = event => {
+            console.error('WebSocket error:', event);
+        };
+
+        ws.onclose = event => {
+            console.log('WebSocket connection closed:', event);
+        };
+
+        sendButton.addEventListener('click', () => {
+            const message = messageInput.value;
+            if (message) {
+                ws.send(JSON.stringify({
+                    event: 'echo',
+                    data: {
+                        message: message
+                    }
+                }));
+                messageInput.value = '';
+            }
+        });
+
+        processButton.addEventListener('click', () => {
+            ws.send(JSON.stringify({
+                event: 'go_process'
+            }));
+            console.log('Sent go_process event');
+        });
+    </script>
+</body>
+</html>
