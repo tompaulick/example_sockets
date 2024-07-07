@@ -21,9 +21,9 @@ anything else gets served by apache.
     ProxyPassReverse /ws ws://127.0.0.1:3000
 
     ServerAdmin webmaster@localhost
-    DocumentRoot /home/tommypaulick/www/html/
+    DocumentRoot /home/user/www/html/
 
-    <Directory /home/tommypaulick/www/html/>
+    <Directory /home/user/www/html/>
         Options Indexes FollowSymLinks
         AllowOverride None
         Require all granted
